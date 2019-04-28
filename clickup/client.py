@@ -2,6 +2,7 @@ import requests
 from collections import defaultdict
 import datetime
 
+
 class Client:
     def __init__(self, email, password, api):
         self.server = "https://api.clickup.com/"
@@ -125,12 +126,12 @@ class Client:
 
     def enrich_task_ids(self, team_id, space_id, task_ids):
         """Retrieve more detailed task information
-        
+
         Arguments:
             team_id {str} -- Team ID
             space_id {str} -- Space ID
             task_ids {list} -- Collection of task ids
-        
+
         Returns:
             response -- JSON Object of enriched tasks
         """
@@ -143,10 +144,10 @@ class Client:
 
     def enrich_task(self, task_id):
         """Retrieve basic task information (not including time estimates)
-        
+
         Arguments:
             task_id {str} -- Task ID
-        
+
         Returns:
             response -- JSON Object of task details
         """
@@ -157,15 +158,15 @@ class Client:
 
     def get_task_ids(self, team_id, project_id, category_id, show_all=False):
         """[summary]
-        
+
         Arguments:
             team_id {str} -- Team ID
             project_id {[type]} -- Project ID
             category_id {[type]} -- Category ID
-        
+
         Keyword Arguments:
             show_all {bool} -- Show all tasks - including open (default: {False})
-        
+
         Returns:
             response -- JSON Object of task ids
         """
@@ -211,7 +212,7 @@ class Client:
                     "space_id": space_id
                 }
 
-    def create_task(self, subcategory, name, timestamp, estimate):
+    def create_task(self, subcategory, name, timestamp, estimate=None):
         """Create task in ClickUp subcategory
 
         Arguments:
@@ -236,7 +237,7 @@ class Client:
 
         response = self.send_request("POST", uri=uri, version="v2", data=data)
 
-        if estimate_time:
+        if estimate:
             task_id = response['id']
             estimate_time = {"time_estimate": 60000 * estimate,
                              "time_estimate_string": "{} minutes".format(estimate)}
