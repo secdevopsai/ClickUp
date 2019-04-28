@@ -211,14 +211,14 @@ class Client:
                     "space_id": space_id
                 }
 
-    def create_task(self, subcategory, name, timestamp, estimate):
+    def create_task(self, subcategory, name, timestamp, estimate_time):
         """Create task in ClickUp subcategory
 
         Arguments:
             subcategory str -- Subcategory
             name str -- Task name
             timestamp int -- Due Date (unix timestamp)
-            estimate int -- Minutes estimated to complete task
+            estimate_time int -- Minutes estimated to complete task
 
         Returns:
             response -- JSON Object of task creation
