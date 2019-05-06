@@ -257,3 +257,20 @@ class Client:
         uri = "v1/tag?project_id={}".format(project_id)
         response = self.send_request("GET", uri=uri, version="v2")
         return response
+    
+    def close_task(self, task_ids):
+        """Close A Task By ID
+        
+        Arguments:
+            task_ids -- Task ID to close
+        """
+
+        if isinstance(task_ids, str):
+            task_ids = [task_ids]
+        elif not isinstance(task_ids, list):
+            raise Exception("Task is not String or List")
+
+        uri = "v1/item?check_resolved=true&check_dependencies=true"
+        to_close = {"item_ids":task_ids,"status":"Closed"}
+        response = self.send_request("PUT", uri=uri, version="v2", data=to_close)
+        return response
