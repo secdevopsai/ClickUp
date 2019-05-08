@@ -1,6 +1,7 @@
 import requests
 from collections import defaultdict
 import datetime
+import json
 
 
 class Client:
@@ -32,7 +33,7 @@ class Client:
         """Login to clickup and retrieve bearer token
 
         Arguments:
-            email {str} 
+            email {str}
             password {str}
 
         Returns:
@@ -61,12 +62,12 @@ class Client:
             headers = {"Authorization": self.api}
         else:
             headers = {"Authorization": "Bearer {}".format(self.bearer)}
-        response = requests.request(
-            method=method, url=self.server + uri, headers=headers, **kwargs).json()
+        response = requests.request(method=method, url=self.server + uri,
+                                    headers=headers, **kwargs).json()
         return response
 
     def get_user(self):
-        """Retrieve user information 
+        """Retrieve user information
 
         Returns:
             dict -- JSON Object of user information
@@ -257,10 +258,10 @@ class Client:
         uri = "v1/tag?project_id={}".format(project_id)
         response = self.send_request("GET", uri=uri, version="v2")
         return response
-    
+
     def close_task(self, task_ids):
         """Close A Task By ID
-        
+
         Arguments:
             task_ids -- Task ID to close
         """
@@ -271,6 +272,8 @@ class Client:
             raise Exception("Task is not String or List")
 
         uri = "v1/item?check_resolved=true&check_dependencies=true"
-        to_close = {"item_ids":task_ids,"status":"Closed"}
-        response = self.send_request("PUT", uri=uri, version="v2", data=to_close)
+        to_close = {"item_ids": task_ids, "status": "Closed"}
+        print(json.dumps(to_close))
+        response = self.send_request(
+            "PUT", uri=uri, version="v2", json=to_close)
         return response

@@ -5,7 +5,7 @@ with open("README.rst", "r") as fh:
 
 setuptools.setup(
     name="clickup",
-    version="0.0.9",
+    version="0.0.10",
     author="Ronald Eddings",
     author_email="ron@secdevops.ai",
     description="A Python library for the ClickUp API",
